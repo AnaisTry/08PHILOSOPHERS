@@ -11,6 +11,7 @@ void *routine() {
 
 int main(int argc, char* argv[]) {
     pthread_t p1, p2;
+    
     if (pthread_create(&p1, NULL, &routine, NULL) != 0) //pointer to pthread, attributes (customisation), pointer to function, arguments of function
     {
         return 1;
@@ -18,7 +19,7 @@ int main(int argc, char* argv[]) {
     if (pthread_create(&p2, NULL, &routine, NULL) != 0) {
         return 2;
     }
-    if (pthread_join(p1, NULL) != 0) // = wait() for threads : pthread struct, pointer that store the return
+    if (pthread_join(p1, NULL) != 0) // == wait() for threads : pthread struct, pointer that store the return
     {
         return 3;
     }

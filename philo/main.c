@@ -6,19 +6,21 @@
 /*   By: angassin <angassin@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 17:30:28 by angassin          #+#    #+#             */
-/*   Updated: 2023/05/27 18:17:51 by angassin         ###   ########.fr       */
+/*   Updated: 2023/05/28 01:08:16 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+void	*philo();
 
 /*
 	
 */
 int	main(int argc, char **argv)
 {
-	pthread_t	*p;
-	int			nb_p;
+	pthread_t	p[ft_atoi(argv[1])];
+	void		*res;
 	int			i;
 
 	if (argc < 5 || argc > 6)
@@ -27,25 +29,32 @@ int	main(int argc, char **argv)
 			" time_to_sleep [number_of_times_each_philosopher_must_eat]\n");
 		return (1);
 	}
-
+	printf("%d\n", ft_atoi(argv[1]));
 	i = 1;
-	while (i < argv[1])
+	while (i < ft_atoi(argv[1]) + 1)
 	{
-		if (pthread_create(p + i, NULL, &philo, NULL) != 0)
+		if (pthread_create(p + i, NULL, &philo, NULL) != OK)
 			return (2);
 		i++;
 	}
 	i = 1;
-	while (i < argv[1])
+	while (i < ft_atoi(argv[1]) + 1)
 	{
-		if (pthread_join(p[i], NULL) != 0)
+		if (pthread_join(p[i], &res) != OK)
 			return (2);
 		i++;
+		free(res);
 	}	
 	return (0);
 }
 
 void	*philo()
 {
-	
+	int	*res;
+	printf("Hello from threads\n");
+	res = malloc(sizeof(*res));
+	*res = 1;
+	sleep(3);
+    printf("Ending thread\n");
+	return (res);
 }
