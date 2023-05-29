@@ -6,7 +6,7 @@
 /*   By: angassin <angassin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 20:18:48 by angassin          #+#    #+#             */
-/*   Updated: 2023/05/28 12:39:38 by angassin         ###   ########.fr       */
+/*   Updated: 2023/05/29 11:03:14 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ int	ft_atoi(const char *str)
 
 	nb = 0;
 	sign = 1;
-	while (*str && (*str == ' ' || (*str >= '\t' && *str <= '\r' )))
+	while (*str && (*str == ' ' || (*str >= '\t' && *str <= '\r')))
 		str++;
 	while (*str == '-' || *str == '+')
-	{	
+	{
 		if (*(str + 1) == '+' || *(str + 1) == '-')
 			return (0);
 		if (*str == '-')
@@ -41,3 +41,9 @@ int	ft_atoi(const char *str)
 	return (nb * sign);
 }
 
+int	error_exit(void *arg, char *message)
+{
+	free(arg);
+	perror(message);
+	return (-1);
+}

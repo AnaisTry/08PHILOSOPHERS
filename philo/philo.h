@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: angassin <angassin@student.s19.be>         +#+  +:+       +#+        */
+/*   By: angassin <angassin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 17:27:34 by angassin          #+#    #+#             */
-/*   Updated: 2023/05/28 23:17:07 by angassin         ###   ########.fr       */
+/*   Updated: 2023/05/29 13:48:56 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ typedef struct s_philo
 {
 	int				id;
 	pthread_t		p_id;
-	pthread_mutex_t	lock;
+	pthread_mutex_t	fork;
 }					t_philo;
 
 typedef struct s_symposium
@@ -48,6 +48,12 @@ typedef struct s_symposium
 	t_philo			*philos;
 
 }					t_symposium;
+
+/*									[Src]									*/
+
+void				*philo(void *arg);
+int					check_input(int argc, char **argv);
+int					error_exit(void *arg, char *message);
 
 /*									[Utils]									*/
 

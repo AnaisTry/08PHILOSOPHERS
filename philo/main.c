@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: angassin <angassin@student.s19.be>         +#+  +:+       +#+        */
+/*   By: angassin <angassin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 17:30:28 by angassin          #+#    #+#             */
-/*   Updated: 2023/05/29 07:57:20 by angassin         ###   ########.fr       */
+/*   Updated: 2023/05/29 11:19:49 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	*philo(void);
-int		check_input(int argc, char **argv);
+static int	thread_create(char **argv, pthread_t *p, int *p_nb);
+static int	thread_wait(char **argv, pthread_t *p, int *p_nb);
 
 /*
 	Program that creates threads that share mutual exclusion synchronization 
@@ -22,46 +22,27 @@ int		check_input(int argc, char **argv);
 int	main(int argc, char **argv)
 {
 	pthread_t	p[OPEN_MAX];
-	void		*res;
-	int			i;
+	int			*p_nb;
 
 	if (check_input(argc, argv) != OK)
 		return (1);
-	res = NULL;
-	i = 1;
-	while (i < ft_atoi(argv[1]) + 1)
-	{
-		if (pthread_create(p + i, NULL, &philo, NULL) != OK)
-		{
-			free(res);
-			return (2);
-		}		
-		i++;
-	}
-	i = 1;
-	while (i < ft_atoi(argv[1]) + 1)
-	{
-		if (pthread_join(p[i], &res) != OK)
-		{
-			free(res);
-			return (2);
-		}
-		i++;
-		free(res);
-	}
+	p_nb = NULL;
+	if (thread_create(argv, p, p_nb) != OK)
+		return (2);
+	if (thread_wait(argv, p, p_nb) != OK)
+		return (3);
 	return (0);
 }
 
-void	*philo(void)
+void	*philo(void *arg)
 {
-	int	*res;
+	int	i;
 
-	printf("Hello from threads\n");
-	res = malloc(sizeof(*res));
-	*res = 1;
+	i = *(int *)arg;
+	printf("Hello from thread %d\n", i);
 	sleep(3);
-	printf("Ending thread\n");
-	return (res);
+	printf("Ending thread %d\n", i);
+	return (arg);
 }
 
 int	check_input(int argc, char **argv)
@@ -75,12 +56,45 @@ int	check_input(int argc, char **argv)
 		return (1);
 	}
 	printf("nb philo : %d\n", ft_atoi(argv[1]));
-	i = 0;
+	i = 1;
 	while (i < argc)
 	{
 		if (ft_atoi(argv[i]) <= 0)
 			return (2);
 		i++;
+	}
+	return (0);
+}
+
+static int	thread_create(char **argv, pthread_t *p, int *p_nb)
+{
+	int	i;
+
+	i = 1;
+	while (i < ft_atoi(argv[1]) + 1)
+	{
+		p_nb = malloc(sizeof(int));
+		if (p_nb == NULL)
+			return (2);
+		*p_nb = i;
+		if (pthread_create(&p[i], NULL, &philo, p_nb) != OK)
+			return (error_exit(p_nb, "could not create thread\n"));
+		i++;
+	}
+	return (0);
+}
+
+static int	thread_wait(char **argv, pthread_t *p, int *p_nb)
+{
+	int	i;
+
+	i = 1;
+	while (i < ft_atoi(argv[1]) + 1)
+	{
+		if (pthread_join(p[i], (void **)&p_nb) != OK)
+			return (error_exit(p_nb, "could not join thread\n"));
+		i++;
+		free(p_nb);
 	}
 	return (0);
 }
