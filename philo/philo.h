@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: angassin <angassin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: angassin <angassin@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 17:27:34 by angassin          #+#    #+#             */
-/*   Updated: 2023/05/28 12:26:43 by angassin         ###   ########.fr       */
+/*   Updated: 2023/05/28 23:17:07 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,24 @@
 
 typedef struct s_philo
 {
-	int			id;
-	pthread_t	p_id;
-}				t_philo;
+	int				id;
+	pthread_t		p_id;
+	pthread_mutex_t	lock;
+}					t_philo;
 
-//typedef struct
+typedef struct s_symposium
+{
+	int				nb_philo;
+	int				time_to_die;
+	int				time_to_eat;
+	int				time_to_sleep;
+	int				nb_meals;
+	t_philo			*philos;
+
+}					t_symposium;
 
 /*									[Utils]									*/
 
-int				ft_atoi(const char *str);
+int					ft_atoi(const char *str);
 
 #endif
