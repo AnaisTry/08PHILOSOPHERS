@@ -9,7 +9,7 @@
 			"request": "launch",
 			"name": "Launch",
 			"program": "${workspaceFolder}/philo",
-			"args": ["2","0", "0", "0"],
+			"args": ["2","200", "200", "5"],
 			"cwd": "${workspaceFolder}"
 		}
 

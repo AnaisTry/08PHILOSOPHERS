@@ -1,24 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   philo_thread.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: angassin <angassin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/27 17:30:28 by angassin          #+#    #+#             */
-/*   Updated: 2023/05/29 15:58:35 by angassin         ###   ########.fr       */
+/*   Created: 2023/05/29 16:00:36 by angassin          #+#    #+#             */
+/*   Updated: 2023/05/29 16:03:26 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "philo/philo.h"
 
 static int	thread_create(char **argv, pthread_t *p, int *p_nb);
 static int	thread_wait(char **argv, pthread_t *p, int *p_nb);
 
-/*
-	Program that creates threads that share mutual exclusion synchronization 
-	primitives, a kind of locks
-*/
+
 int	main(int argc, char **argv)
 {
 	pthread_t	*p;

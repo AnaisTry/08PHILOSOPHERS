@@ -6,7 +6,7 @@
 /*   By: angassin <angassin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 17:27:34 by angassin          #+#    #+#             */
-/*   Updated: 2023/05/29 13:48:56 by angassin         ###   ########.fr       */
+/*   Updated: 2023/05/29 15:39:05 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ typedef struct s_philo
 {
 	int				id;
 	pthread_t		p_id;
-	pthread_mutex_t	fork;
 }					t_philo;
 
 typedef struct s_symposium
