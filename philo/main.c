@@ -6,14 +6,14 @@
 /*   By: angassin <angassin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 17:30:28 by angassin          #+#    #+#             */
-/*   Updated: 2023/05/29 15:58:35 by angassin         ###   ########.fr       */
+/*   Updated: 2023/05/30 18:25:05 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static int	thread_create(char **argv, pthread_t *p, int *p_nb);
-static int	thread_wait(char **argv, pthread_t *p, int *p_nb);
+static int	thread_create(char **argv, t_symposium *s);
+//static int	thread_wait(char **argv, pthread_t *p, int *p_nb);
 
 /*
 	Program that creates threads that share mutual exclusion synchronization 
@@ -21,17 +21,16 @@ static int	thread_wait(char **argv, pthread_t *p, int *p_nb);
 */
 int	main(int argc, char **argv)
 {
-	pthread_t	*p;
-	int			*p_nb;
+	t_symposium	s;
 
 	if (check_input(argc, argv) != OK)
 		return (1);
-	p_nb = NULL;
-	p = malloc(sizeof(pthread_t) * 200);
-	if (thread_create(argv, p, p_nb) != OK)
+	if (symposium_init(argc, argv, &s) != OK)
 		return (2);
-	if (thread_wait(argv, p, p_nb) != OK)
-		return (3);
+	if (thread_create(argv, &s) != OK)
+		return (2);
+	//if (thread_wait(argv, s.philos->p_id, s.philos->id) != OK)
+	//	return (3);
 	return (0);
 }
 
@@ -67,24 +66,21 @@ int	check_input(int argc, char **argv)
 	return (0);
 }
 
-static int	thread_create(char **argv, pthread_t *p, int *p_nb)
+static int	thread_create(char **argv, t_symposium *s)
 {
 	int	i;
 
 	i = 1;
 	while (i < ft_atoi(argv[1]) + 1)
 	{
-		p_nb = malloc(sizeof(int));
-		if (p_nb == NULL)
-			return (2);
-		*p_nb = i;
-		if (pthread_create(&p[i], NULL, &philo, p_nb) != OK)
-			return (error_exit(p_nb, "could not create thread\n"));
+		s->philos->id = i;
+		if (pthread_create(&s->philos->p_id, NULL, &philo, &s->philos->id) != OK)
+			return (error_exit(s, "could not create thread\n"));
 		i++;
 	}
 	return (0);
 }
-
+/*
 static int	thread_wait(char **argv, pthread_t *p, int *p_nb)
 {
 	int	i;
@@ -99,3 +95,4 @@ static int	thread_wait(char **argv, pthread_t *p, int *p_nb)
 	}
 	return (0);
 }
+*/

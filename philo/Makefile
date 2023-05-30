@@ -6,7 +6,7 @@
 #    By: angassin <angassin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/12 12:10:21 by angassin          #+#    #+#              #
-#    Updated: 2023/05/29 11:38:39 by angassin         ###   ########.fr        #
+#    Updated: 2023/05/30 17:03:14 by angassin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,7 @@ DEBUG		= -g -fsanitize=address -fsanitize=undefined \
 
 SRC			= $(PHILO_SRC) $(UTILS_SRC)
 
-PHILO_SRC		= main.c #philo.c
+PHILO_SRC		= main.c init.c #philo.c
 UTILS_SRC		= utils.c
 
 OBJ			= $(SRC:.c=.o)

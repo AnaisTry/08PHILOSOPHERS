@@ -6,7 +6,7 @@
 /*   By: angassin <angassin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 20:18:48 by angassin          #+#    #+#             */
-/*   Updated: 2023/05/29 11:03:14 by angassin         ###   ########.fr       */
+/*   Updated: 2023/05/30 18:26:54 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ int	ft_atoi(const char *str)
 
 int	error_exit(void *arg, char *message)
 {
-	free(arg);
+	//free(arg);
+	(void)arg;
 	perror(message);
 	return (-1);
 }
