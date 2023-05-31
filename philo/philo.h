@@ -6,7 +6,7 @@
 /*   By: angassin <angassin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 17:27:34 by angassin          #+#    #+#             */
-/*   Updated: 2023/05/31 10:21:04 by angassin         ###   ########.fr       */
+/*   Updated: 2023/05/31 14:42:19 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,16 @@
 
 /*									[Typedefs]								*/
 
+typedef struct s_symposium t_symposium;
 typedef struct s_philo
 {
 	int				id;
 	pthread_t		p_id;
 	int				last_meal;
+	t_symposium		*symposium;
 }					t_philo;
 
-typedef struct s_symposium
+struct s_symposium
 {
 	int				nb_philo;
 	int				time_to_die;
@@ -48,7 +50,7 @@ typedef struct s_symposium
 	t_philo			*philos;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	death;
-}					t_symposium;
+};
 
 /*									[Src]									*/
 

@@ -6,7 +6,7 @@
 /*   By: angassin <angassin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 20:18:48 by angassin          #+#    #+#             */
-/*   Updated: 2023/05/31 10:20:41 by angassin         ###   ########.fr       */
+/*   Updated: 2023/05/31 18:50:24 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,10 @@ int	ft_atoi(const char *str)
 
 int	error_exit(t_symposium *s, char *message)
 {
-	free(s->philos);
-	free(s->forks);
+	if (s->philos)
+		free(s->philos);
+	if (s->forks)
+		free(s->forks);
 	perror(message);
 	return (-1);
 }
