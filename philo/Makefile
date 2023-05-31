@@ -6,7 +6,7 @@
 #    By: angassin <angassin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/12 12:10:21 by angassin          #+#    #+#              #
-#    Updated: 2023/05/30 17:03:14 by angassin         ###   ########.fr        #
+#    Updated: 2023/05/31 09:57:59 by angassin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ NAME		= philo
 
 CC			= gcc
 
-CFLAGS		= -Wall -Wextra -Werror -g3 -fsanitize=thread
+CFLAGS		= -Wall -Wextra -Werror -g3 #-fsanitize=thread
 
 DEBUG		= -g -fsanitize=address -fsanitize=undefined \
 			  -fno-sanitize-recover=all	-fsanitize=float-divide-by-zero \

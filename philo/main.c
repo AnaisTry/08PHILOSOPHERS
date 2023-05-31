@@ -6,7 +6,7 @@
 /*   By: angassin <angassin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 17:30:28 by angassin          #+#    #+#             */
-/*   Updated: 2023/05/30 18:25:05 by angassin         ###   ########.fr       */
+/*   Updated: 2023/05/31 10:22:27 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	main(int argc, char **argv)
 	if (check_input(argc, argv) != OK)
 		return (1);
 	if (symposium_init(argc, argv, &s) != OK)
-		return (2);
+		error_exit(&s, "Failed initializing the symposium\n");
 	if (thread_create(argv, &s) != OK)
 		return (2);
 	//if (thread_wait(argv, s.philos->p_id, s.philos->id) != OK)
@@ -74,8 +74,8 @@ static int	thread_create(char **argv, t_symposium *s)
 	while (i < ft_atoi(argv[1]) + 1)
 	{
 		s->philos->id = i;
-		if (pthread_create(&s->philos->p_id, NULL, &philo, &s->philos->id) != OK)
-			return (error_exit(s, "could not create thread\n"));
+		//if (pthread_create(&s->philos->p_id, NULL, &philo, &s->philos->id) != OK)
+		//	return (error_exit(s, "could not create thread\n"));
 		i++;
 	}
 	return (0);

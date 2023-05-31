@@ -6,7 +6,7 @@
 /*   By: angassin <angassin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 17:27:34 by angassin          #+#    #+#             */
-/*   Updated: 2023/05/30 17:25:05 by angassin         ###   ########.fr       */
+/*   Updated: 2023/05/31 10:21:04 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,6 @@ int					symposium_init(int argc, char **argv, t_symposium *s);
 /*									[Utils]									*/
 
 int					ft_atoi(const char *str);
-int					error_exit(void *arg, char *message);
+int					error_exit(t_symposium *s, char *message);
 
 #endif
