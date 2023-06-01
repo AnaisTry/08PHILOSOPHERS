@@ -6,14 +6,14 @@
 /*   By: angassin <angassin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 17:02:29 by angassin          #+#    #+#             */
-/*   Updated: 2023/05/31 18:59:49 by angassin         ###   ########.fr       */
+/*   Updated: 2023/06/01 20:56:08 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
 int	symposium_init(int argc, char **argv, t_symposium *s)
-{
+{	
 	s->nb_philo = ft_atoi(argv[1]);
 	s->forks = NULL;
 	s->philos = malloc(sizeof(*s->philos) * s->nb_philo);
@@ -27,5 +27,21 @@ int	symposium_init(int argc, char **argv, t_symposium *s)
 	s->time_to_sleep = ft_atoi(argv[4]);
 	if (argc == 6)
 		s->nb_meals = ft_atoi(argv[5]);
+	return (0);
+}
+
+int	mutexes_init(t_symposium *s)
+{
+	int	i;
+
+	i = 1;
+	while (i <= s->nb_philo)
+	{
+		if (pthread_mutex_init(&s->forks[i], NULL) != OK)
+			return (error_exit(s, "Initialisation of forks failed"));
+		i++;
+	}
+	if (pthread_mutex_init(&s->death, NULL) != OK)
+		return (error_exit(s, "Initialisation of death failed"));
 	return (0);
 }

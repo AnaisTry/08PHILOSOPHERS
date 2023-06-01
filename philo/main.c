@@ -6,7 +6,7 @@
 /*   By: angassin <angassin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 17:30:28 by angassin          #+#    #+#             */
-/*   Updated: 2023/05/31 19:32:16 by angassin         ###   ########.fr       */
+/*   Updated: 2023/06/01 20:58:53 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ static int	thread_create(char **argv, t_symposium *s)
 	int	i;
 
 	i = 1;
-	while (i < ft_atoi(argv[1]) + 1)
+	while (i <= ft_atoi(argv[1]))
 	{
 		s->philos[i].id = i;
 		s->philos[i].symposium = s;
@@ -102,5 +102,6 @@ static int	thread_wait(char **argv, t_symposium *s)
 		pthread_mutex_destroy(&s->forks[i]);
 		i++;
 	}
+	pthread_mutex_destroy(&s->death);
 	return (0);
 }
