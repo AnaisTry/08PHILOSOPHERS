@@ -6,7 +6,7 @@
 /*   By: angassin <angassin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 17:02:29 by angassin          #+#    #+#             */
-/*   Updated: 2023/06/01 20:56:08 by angassin         ###   ########.fr       */
+/*   Updated: 2023/06/02 14:37:31 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int	symposium_init(int argc, char **argv, t_symposium *s)
 	s->time_to_sleep = ft_atoi(argv[4]);
 	if (argc == 6)
 		s->nb_meals = ft_atoi(argv[5]);
+	mutexes_init(s);
 	return (0);
 }
 
@@ -34,8 +35,8 @@ int	mutexes_init(t_symposium *s)
 {
 	int	i;
 
-	i = 1;
-	while (i <= s->nb_philo)
+	i = 0;
+	while (i < s->nb_philo)
 	{
 		if (pthread_mutex_init(&s->forks[i], NULL) != OK)
 			return (error_exit(s, "Initialisation of forks failed"));

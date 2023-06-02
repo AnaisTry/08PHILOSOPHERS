@@ -6,18 +6,20 @@
 /*   By: angassin <angassin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 17:30:28 by angassin          #+#    #+#             */
-/*   Updated: 2023/06/01 20:58:53 by angassin         ###   ########.fr       */
+/*   Updated: 2023/06/02 16:12:52 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static int	thread_create(char **argv, t_symposium *s);
-static int	thread_wait(char **argv, t_symposium *s);
+static int	thread_create(t_symposium *s);
+static int	thread_wait(t_symposium *s);
 
 /*
 	Program that creates threads that share mutual exclusion synchronization 
-	primitives, a kind of locks
+	primitives, a kind of locks, implementing a concurrent algorithm to solve 
+	the dining philosophers problem : 
+	https://en.wikipedia.org/wiki/Dining_philosophers_problem
 */
 int	main(int argc, char **argv)
 {
@@ -27,9 +29,9 @@ int	main(int argc, char **argv)
 		return (1);
 	if (symposium_init(argc, argv, &s) != OK)
 		return (2);
-	if (thread_create(argv, &s) != OK)
+	if (thread_create(&s) != OK)
 		return (3);
-	if (thread_wait(argv, &s) != OK)
+	if (thread_wait(&s) != OK)
 		return (4);
 	return (0);
 }
@@ -40,7 +42,7 @@ void	*philo(void *arg)
 
 	p = arg;
 	printf("Hello from thread %d\n", p->id);
-	sleep(3);
+	sleep(1);
 	printf("Ending thread %d\n", p->id);
 	return (arg);
 }
@@ -66,14 +68,14 @@ int	check_input(int argc, char **argv)
 	return (0);
 }
 
-static int	thread_create(char **argv, t_symposium *s)
+static int	thread_create(t_symposium *s)
 {
 	int	i;
 
-	i = 1;
-	while (i <= ft_atoi(argv[1]))
+	i = 0;
+	while (i < s->nb_philo)
 	{
-		s->philos[i].id = i;
+		s->philos[i].id = i + 1;
 		s->philos[i].symposium = s;
 		if (pthread_create(&s->philos[i].p_id, NULL, &philo, &s->philos[i])
 			!= OK)
@@ -83,25 +85,26 @@ static int	thread_create(char **argv, t_symposium *s)
 	return (0);
 }
 
-static int	thread_wait(char **argv, t_symposium *s)
+static int	thread_wait(t_symposium *s)
 {
 	int	i;
 
-	i = 1;
-	while (i <= ft_atoi(argv[1]))
+	i = 0;
+	while (i < s->nb_philo)
 	{
 		if (pthread_join(s->philos[i].p_id, NULL) != OK)
 			return (error_exit(s, "could not join thread"));
 		i++;
 	}
-	free(s->philos);
-	free(s->forks);
-	i = 1;
-	while (i <= s->nb_philo)
+	i = 0;
+	while (i < s->nb_philo)
 	{
+		printf("destroying fork #%d\n", i);
 		pthread_mutex_destroy(&s->forks[i]);
 		i++;
 	}
+	free(s->philos);
+	free(s->forks);
 	pthread_mutex_destroy(&s->death);
 	return (0);
 }

@@ -6,7 +6,7 @@
 #    By: angassin <angassin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/12 12:10:21 by angassin          #+#    #+#              #
-#    Updated: 2023/06/01 20:57:29 by angassin         ###   ########.fr        #
+#    Updated: 2023/06/02 16:12:36 by angassin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,19 +25,34 @@ NAME		= philo
 
 CC			= gcc
 
-CFLAGS		= -Wall -Wextra -Werror -g3 -pthread #-fsanitize=thread
+CFLAGS		= -Wall -Wextra -Werror -pthread
 
-DEBUG		= -g -fsanitize=address -fsanitize=undefined \
-			  -fno-sanitize-recover=all	-fsanitize=float-divide-by-zero \
-			  -fsanitize=float-cast-overflow -fno-sanitize=null \
-			  -fno-sanitize=alignment
+DEBUG		= 0
+
+THREAD_SANI	= 0
+
+SANI		= 0
+
+ifeq ($(THREAD_SANI), 1)
+	CFLAGS += -fsanitize=thread
+	DEBUG = 1
+endif
+
+ifeq ($(SANI, 1))
+	CFLAGS += -fsanitize=address 
+	DEBUG = 1
+endif
+
+ifeq ($(DEBUG), 1)
+	CFLAGS += -g3
+endif
 
 #--------------------------------SOURCES----------------------------------------
 
 SRC			= $(PHILO_SRC) $(UTILS_SRC)
 
-PHILO_SRC		= main.c init.c #philo.c
-UTILS_SRC		= utils.c
+PHILO_SRC	= main.c init.c #philo.c
+UTILS_SRC	= utils.c
 
 OBJ			= $(SRC:.c=.o)
 
@@ -45,7 +60,7 @@ OBJ			= $(SRC:.c=.o)
 
 %o: %c
 	@echo $(GRAY)"Compiling...";
-	@$(CC) $(CFLAGS) -Iincludes -c $< -o  $(<:.c=.o)
+	@$(CC) $(CFLAGS)  -Iincludes -c $< -o  $(<:.c=.o) #$(DEBUG)
 
 all: $(NAME)
 
@@ -61,11 +76,6 @@ exe: all
 	@./$(NAME) 5 800 200 200
 	@echo "\n     - Done -"
 
-debug: $(OBJ)
-	@echo $(CURSIVE)$(GRAY) "     - Compiling $(NAME)..." $(NONE)
-	@$(CC) $(CFLAGS) $(DEBUG) $(OBJ) -o $(NAME)
-	@echo $(GREEN)"- Compiled -"$(NONE)
-
 clean:
 	@echo $(CURSIVE)$(GRAY) "     - Removing object files..." $(NONE)
 	@rm -rf $(OBJ) $(BONUS_OBJ)
@@ -76,4 +86,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all debug exe clean fclean re
+.PHONY: all exe clean fclean re
