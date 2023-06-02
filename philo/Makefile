@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: angassin <angassin@student.42.fr>          +#+  +:+       +#+         #
+#    By: angassin <angassin@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/12 12:10:21 by angassin          #+#    #+#              #
-#    Updated: 2023/06/02 16:33:12 by angassin         ###   ########.fr        #
+#    Updated: 2023/06/02 23:13:59 by angassin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,7 +54,7 @@ endif
 
 SRC			= $(PHILO_SRC) $(UTILS_SRC)
 
-PHILO_SRC	= main.c init.c #philo.c
+PHILO_SRC	= main.c init.c philo.c
 UTILS_SRC	= utils.c
 
 OBJ			= $(SRC:.c=.o)

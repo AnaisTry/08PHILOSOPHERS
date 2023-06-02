@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: angassin <angassin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: angassin <angassin@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 17:27:34 by angassin          #+#    #+#             */
-/*   Updated: 2023/06/02 20:05:05 by angassin         ###   ########.fr       */
+/*   Updated: 2023/06/02 23:27:17 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 /*									[Macros]								*/
 
 # define OK 0
+# define TRUE 1
 
 /*									[Typedefs]								*/
 
@@ -58,11 +59,12 @@ struct						s_symposium
 
 /*									[Src]									*/
 
-void	*philo(void *arg);
-int		check_input(int argc, char **argv);
+// init.c
+int		symposium_init(int argc, char **argv, t_symposium *s);
 
-//init.c
-int		symposium_init(int argc, char **argv, t_symposium *s);;
+// philo.c
+int		thread_create(t_symposium *s);
+int		thread_wait(t_symposium *s);
 
 /*									[Utils]									*/
 
