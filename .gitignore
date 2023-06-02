@@ -40,7 +40,7 @@
 *.hex
 
 # Debug files
-# *.dSYM/
+*.dSYM/
 *.su
 *.idb
 *.pdb
