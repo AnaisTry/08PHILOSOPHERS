@@ -6,7 +6,7 @@
 #    By: angassin <angassin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/12 12:10:21 by angassin          #+#    #+#              #
-#    Updated: 2023/06/02 16:28:16 by angassin         ###   ########.fr        #
+#    Updated: 2023/06/02 16:33:12 by angassin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,7 +39,10 @@ ifeq ($(THREAD_SANI), 1)
 endif
 
 ifeq ($(SANI), 1)
-	CFLAGS += -fsanitize=address 
+	CFLAGS += 	-fsanitize=address #-fsanitize=undefined \
+				-fno-sanitize-recover=all	-fsanitize=float-divide-by-zero \
+				-fsanitize=float-cast-overflow -fno-sanitize=null \
+				-fno-sanitize=alignment\
 	DEBUG = 1
 endif
 

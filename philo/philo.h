@@ -6,7 +6,7 @@
 /*   By: angassin <angassin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 17:27:34 by angassin          #+#    #+#             */
-/*   Updated: 2023/06/01 20:53:13 by angassin         ###   ########.fr       */
+/*   Updated: 2023/06/02 17:08:24 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ typedef struct s_philo
 	int						id;
 	pthread_t				p_id;
 	int						last_meal;
+	pthread_mutex_t			*left_fork;
+	pthread_mutex_t			*right_fork;
 	t_symposium				*symposium;
 }							t_philo;
 

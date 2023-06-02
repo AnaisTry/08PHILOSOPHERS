@@ -6,7 +6,7 @@
 /*   By: angassin <angassin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 17:30:28 by angassin          #+#    #+#             */
-/*   Updated: 2023/06/02 16:12:52 by angassin         ###   ########.fr       */
+/*   Updated: 2023/06/02 17:54:07 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,19 @@ void	*philo(void *arg)
 	t_philo		*p;
 
 	p = arg;
-	printf("Hello from thread %d\n", p->id);
-	sleep(1);
+	pthread_mutex_lock(p->left_fork);
+	printf("%d has taken a fork\n", p->id);
+	pthread_mutex_lock(p->right_fork);
+	printf("%d is eating\n", p->id);
+	usleep(1000000);
+	pthread_mutex_unlock(p->left_fork);
+	pthread_mutex_unlock(p->right_fork);
+	printf("%d is sleeping\n", p->id);
+	usleep(1000000);
+	printf("%d is thinking\n", p->id);
+	usleep(1000000);
 	printf("Ending thread %d\n", p->id);
-	return (arg);
+	return (NULL);
 }
 
 int	check_input(int argc, char **argv)
@@ -77,6 +86,11 @@ static int	thread_create(t_symposium *s)
 	{
 		s->philos[i].id = i + 1;
 		s->philos[i].symposium = s;
+		s->philos[i].left_fork = &s->forks[i];
+		if (i == s->nb_philo - 1)
+			s->philos[i].right_fork = &s->forks[0];
+		else
+			s->philos[i].right_fork = &s->forks [i + 1];
 		if (pthread_create(&s->philos[i].p_id, NULL, &philo, &s->philos[i])
 			!= OK)
 			return (error_exit(s, "could not create thread"));
