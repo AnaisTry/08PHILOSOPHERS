@@ -6,7 +6,7 @@
 #    By: angassin <angassin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/12 12:10:21 by angassin          #+#    #+#              #
-#    Updated: 2023/06/02 16:12:36 by angassin         ###   ########.fr        #
+#    Updated: 2023/06/02 16:15:17 by angassin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -60,7 +60,7 @@ OBJ			= $(SRC:.c=.o)
 
 %o: %c
 	@echo $(GRAY)"Compiling...";
-	@$(CC) $(CFLAGS)  -Iincludes -c $< -o  $(<:.c=.o) #$(DEBUG)
+	@$(CC) $(CFLAGS)  -Iincludes -c $< -o  $(<:.c=.o)
 
 all: $(NAME)
 
