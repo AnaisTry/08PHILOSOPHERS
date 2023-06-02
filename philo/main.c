@@ -6,7 +6,7 @@
 /*   By: angassin <angassin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 17:30:28 by angassin          #+#    #+#             */
-/*   Updated: 2023/06/02 19:55:37 by angassin         ###   ########.fr       */
+/*   Updated: 2023/06/02 20:08:39 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ void	*philo(void *arg)
 	printf("%d is sleeping\n", p->id);
 	usleep(1000 * p->symposium->time_to_sleep);
 	printf("%d is thinking\n", p->id);
-	usleep(1000000);
 	printf("Ending thread %d\n", p->id);
 	return (NULL);
 }
