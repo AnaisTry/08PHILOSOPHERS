@@ -6,7 +6,7 @@
 #    By: angassin <angassin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/12 12:10:21 by angassin          #+#    #+#              #
-#    Updated: 2023/06/02 16:15:17 by angassin         ###   ########.fr        #
+#    Updated: 2023/06/02 16:28:16 by angassin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,7 @@ ifeq ($(THREAD_SANI), 1)
 	DEBUG = 1
 endif
 
-ifeq ($(SANI, 1))
+ifeq ($(SANI), 1)
 	CFLAGS += -fsanitize=address 
 	DEBUG = 1
 endif
