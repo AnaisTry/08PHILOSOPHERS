@@ -6,7 +6,7 @@
 /*   By: angassin <angassin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 17:27:34 by angassin          #+#    #+#             */
-/*   Updated: 2023/06/02 17:08:24 by angassin         ###   ########.fr       */
+/*   Updated: 2023/06/02 20:05:05 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@
 # include <stdlib.h>
 // usleep
 # include <unistd.h>
+// gettimeofday
+# include <sys/time.h>
 
 /*									[Macros]								*/
 
@@ -48,6 +50,7 @@ struct						s_symposium
 	int						time_to_eat;
 	int						time_to_sleep;
 	int						nb_meals;
+	unsigned long			start;
 	t_philo					*philos;
 	pthread_mutex_t			*forks;
 	pthread_mutex_t			death;
@@ -59,8 +62,7 @@ void	*philo(void *arg);
 int		check_input(int argc, char **argv);
 
 //init.c
-int		symposium_init(int argc, char **argv, t_symposium *s);
-int		mutexes_init(t_symposium *s);
+int		symposium_init(int argc, char **argv, t_symposium *s);;
 
 /*									[Utils]									*/
 
