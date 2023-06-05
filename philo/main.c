@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: angassin <angassin@student.s19.be>         +#+  +:+       +#+        */
+/*   By: angassin <angassin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 17:30:28 by angassin          #+#    #+#             */
-/*   Updated: 2023/06/02 23:26:00 by angassin         ###   ########.fr       */
+/*   Updated: 2023/06/05 17:48:46 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static int	check_input(int argc, char **argv);
+static int	input_check(int argc, char **argv);
 
 /*
 	Program that creates threads that share mutual exclusion synchronization 
@@ -23,19 +23,40 @@ static int	check_input(int argc, char **argv);
 int	main(int argc, char **argv)
 {
 	t_symposium	s;
+	int			i;
 
-	if (check_input(argc, argv) != OK)
+	if (input_check(argc, argv) != OK)
 		return (1);
 	if (symposium_init(argc, argv, &s) != OK)
 		return (2);
 	if (thread_create(&s) != OK)
 		return (3);
+	while (TRUE)
+	{
+		i = 0;
+		while (i < s.nb_philo)
+		{
+			if (s.philos[i].last_meal - s.start > s.time_to_die)
+			{
+				s.dead = TRUE;
+				printf("%ld %d died\n", get_time(&s), s.philos[i].id);
+				break ;
+			}
+			i++;
+		}
+		if (s.dead == TRUE)
+			break ;
+	}
 	if (thread_wait(&s) != OK)
 		return (4);
 	return (0);
 }
 
-static int	check_input(int argc, char **argv)
+/*
+	Checks number of arguments and that the value of each argument
+	is bigger than 0
+*/
+static int	input_check(int argc, char **argv)
 {
 	int	i;
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: angassin <angassin@student.s19.be>         +#+  +:+       +#+        */
+/*   By: angassin <angassin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 17:27:34 by angassin          #+#    #+#             */
-/*   Updated: 2023/06/02 23:27:17 by angassin         ###   ########.fr       */
+/*   Updated: 2023/06/05 17:16:10 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,19 +29,25 @@
 /*									[Macros]								*/
 
 # define OK 0
-# define TRUE 1
+# define EVEN 0
 
 /*									[Typedefs]								*/
+
+typedef enum e_bool
+{
+	FALSE,
+	TRUE
+}			t_bool;
 
 typedef struct s_symposium	t_symposium;
 typedef struct s_philo
 {
 	int						id;
 	pthread_t				p_id;
-	int						last_meal;
+	time_t					last_meal;
 	pthread_mutex_t			*left_fork;
 	pthread_mutex_t			*right_fork;
-	t_symposium				*symposium;
+	t_symposium				*dinner;
 }							t_philo;
 
 struct						s_symposium
@@ -51,10 +57,12 @@ struct						s_symposium
 	int						time_to_eat;
 	int						time_to_sleep;
 	int						nb_meals;
-	unsigned long			start;
+	time_t					start;
 	t_philo					*philos;
 	pthread_mutex_t			*forks;
-	pthread_mutex_t			death;
+	pthread_mutex_t			*death;
+	t_bool					dead;
+
 };
 
 /*									[Src]									*/
@@ -70,5 +78,6 @@ int		thread_wait(t_symposium *s);
 
 int		ft_atoi(const char *str);
 int		error_exit(t_symposium *s, char *message);
+time_t	get_time(t_symposium *s);
 
 #endif

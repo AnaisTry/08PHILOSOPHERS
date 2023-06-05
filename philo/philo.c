@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: angassin <angassin@student.s19.be>         +#+  +:+       +#+        */
+/*   By: angassin <angassin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 23:14:26 by angassin          #+#    #+#             */
-/*   Updated: 2023/06/02 23:22:18 by angassin         ###   ########.fr       */
+/*   Updated: 2023/06/05 17:36:30 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,22 @@ static void	*philo(void *arg)
 	t_philo		*p;
 
 	p = arg;
-	pthread_mutex_lock(p->left_fork);
-	printf("%d has taken a fork\n", p->id);
-	pthread_mutex_lock(p->right_fork);
-	printf("%d is eating\n", p->id);
-	usleep(1000 * p->symposium->time_to_eat);
-	pthread_mutex_unlock(p->left_fork);
-	pthread_mutex_unlock(p->right_fork);
-	printf("%d is sleeping\n", p->id);
-	usleep(1000 * p->symposium->time_to_sleep);
-	printf("%d is thinking\n", p->id);
-	printf("Ending thread %d\n", p->id);
+	while (p->dinner->dead == FALSE)
+	{
+		if (p->id % 2 == EVEN)
+			usleep(1000 * p->dinner->time_to_eat / 2);
+		pthread_mutex_lock(p->left_fork);
+		printf("%ld %d has taken a fork\n", get_time(p->dinner), p->id);
+		pthread_mutex_lock(p->right_fork);
+		p->last_meal = get_time(p->dinner);
+		printf("%ld %d is eating\n", get_time(p->dinner), p->id);
+		usleep(1000 * p->dinner->time_to_eat);
+		pthread_mutex_unlock(p->left_fork);
+		pthread_mutex_unlock(p->right_fork);
+		printf("%ld %d is sleeping\n", get_time(p->dinner), p->id);
+		usleep(1000 * p->dinner->time_to_sleep);
+		printf("%ld %d is thinking\n", get_time(p->dinner), p->id);
+	}
 	return (NULL);
 }
 
@@ -39,8 +44,9 @@ int	thread_create(t_symposium *s)
 	while (i < s->nb_philo)
 	{
 		s->philos[i].id = i + 1;
-		s->philos[i].symposium = s;
+		s->philos[i].dinner = s;
 		s->philos[i].left_fork = &s->forks[i];
+		s->philos[i].last_meal = s->start;
 		if (i == s->nb_philo - 1)
 			s->philos[i].right_fork = &s->forks[0];
 		else
@@ -73,6 +79,7 @@ int	thread_wait(t_symposium *s)
 	}
 	free(s->philos);
 	free(s->forks);
-	pthread_mutex_destroy(&s->death);
+	pthread_mutex_destroy(s->death);
+	free(s->death);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: angassin <angassin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 20:18:48 by angassin          #+#    #+#             */
-/*   Updated: 2023/05/31 18:50:24 by angassin         ###   ########.fr       */
+/*   Updated: 2023/06/05 12:29:42 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,21 @@ int	ft_atoi(const char *str)
 
 int	error_exit(t_symposium *s, char *message)
 {
-	if (s->philos)
-		free(s->philos);
-	if (s->forks)
-		free(s->forks);
+	free(s->philos);
+	free(s->forks);
+	free(s->death);
 	perror(message);
 	return (-1);
+}
+
+time_t	get_time(t_symposium *s)
+{
+	struct timeval	current_time;
+	time_t			time_in_milliseconds;
+
+	if (gettimeofday(&current_time, NULL) != OK)
+		return (error_exit(s, "Could not get current time"));
+	time_in_milliseconds = current_time.tv_sec * 1000
+		+ current_time.tv_usec / 1000;
+	return (time_in_milliseconds);
 }
