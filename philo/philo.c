@@ -6,7 +6,7 @@
 /*   By: angassin <angassin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 23:14:26 by angassin          #+#    #+#             */
-/*   Updated: 2023/06/05 17:52:53 by angassin         ###   ########.fr       */
+/*   Updated: 2023/06/06 13:09:03 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void	*philo(void *arg)
 	while (p->dinner->dead == FALSE)
 	{
 		if (p->id % 2 == EVEN)
-			usleep(1000 * p->dinner->time_to_eat / 2);
+			usleep(100);
 		pthread_mutex_lock(p->left_fork);
 		printf("%ld %d has taken a fork\n", get_time(p->dinner), p->id);
 		pthread_mutex_lock(p->right_fork);
