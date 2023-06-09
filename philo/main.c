@@ -6,7 +6,7 @@
 /*   By: angassin <angassin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 17:30:28 by angassin          #+#    #+#             */
-/*   Updated: 2023/06/07 11:49:55 by angassin         ###   ########.fr       */
+/*   Updated: 2023/06/09 12:49:31 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,12 +71,13 @@ static void	check_if_dead(t_symposium *s)
 		i = 0;
 		while (i < s->nb_philo)
 		{
-			printf("%d start : %ld\n", i, s->start);
-			printf("%d last meal : %ld\n", i, s->philos[i].last_meal);
-			if (s->philos[i].last_meal - s->start > s->time_to_die)
+			//printf("%d start : %ld\n", i, s->start);
+			//printf("%d last meal : %ld\n", i, s->philos[i].last_meal);
+			if (get_time(s) - s->philos[i].last_meal > s->time_to_die)
 			{
 				s->dead = TRUE;
-				printf("%ld %d died\n", get_time(s), s->philos[i].id);
+				printf("%ld %d died\n", get_time(s) - s->start, s->philos[i].id);
+				printf("last %ld, start %ld, ttd %d\n", s->philos[i].last_meal, s->start, s->time_to_die);
 				break ;
 			}
 			i++;

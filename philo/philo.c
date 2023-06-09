@@ -6,7 +6,7 @@
 /*   By: angassin <angassin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 23:14:26 by angassin          #+#    #+#             */
-/*   Updated: 2023/06/07 11:45:51 by angassin         ###   ########.fr       */
+/*   Updated: 2023/06/09 12:41:48 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,26 +17,30 @@ static void	*philo(void *arg)
 	t_philo		*p;
 
 	p = arg;
-	printf("%d last meal : %ld\n", p->id, p->last_meal);
+	//printf("%d last meal : %ld\n", p->id, p->last_meal);
 	while (p->dinner->dead == FALSE)
 	{
 		if (p->id % 2 == EVEN)
 			usleep(100);
 		pthread_mutex_lock(p->left_fork);
-		printf("%ld %d has taken a fork\n", get_time(p->dinner), p->id);
+		printf("%ld %d has taken a fork\n",
+			get_time(p->dinner) - p->dinner->start, p->id);
 		pthread_mutex_lock(p->right_fork);
 		p->last_meal = get_time(p->dinner);
-		printf("%ld %d is eating\n", get_time(p->dinner), p->id);
-		usleep(1000 * p->dinner->time_to_eat);
+		printf("%ld %d has taken a fork\n",
+			get_time(p->dinner) - p->dinner->start, p->id);
+		printf("%ld %d is eating\n",
+			get_time(p->dinner) - p->dinner->start, p->id);
+		ft_usleep(p->dinner->time_to_eat);
 		pthread_mutex_unlock(p->left_fork);
 		pthread_mutex_unlock(p->right_fork);
 		if (p->dinner->dead == TRUE)
 			break ;
-		printf("%ld %d is sleeping\n", get_time(p->dinner), p->id);
-		usleep(1000 * p->dinner->time_to_sleep);
+		printf("%ld %d is sleeping\n", get_time(p->dinner) - p->dinner->start, p->id);
+		ft_usleep(p->dinner->time_to_sleep);
 		if (p->dinner->dead == TRUE)
 			break ;
-		printf("%ld %d is thinking\n", get_time(p->dinner), p->id);
+		printf("%ld %d is thinking\n", get_time(p->dinner) - p->dinner->start, p->id);
 	}
 	//printf("%ld, Ending thread %d\n", get_time(p->dinner), p->id);
 	return (NULL);
