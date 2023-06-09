@@ -6,13 +6,13 @@
 /*   By: angassin <angassin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 17:30:28 by angassin          #+#    #+#             */
-/*   Updated: 2023/06/09 12:49:31 by angassin         ###   ########.fr       */
+/*   Updated: 2023/06/09 15:44:49 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static int	input_check(int argc, char **argv);
+static int	check_input(int argc, char **argv);
 static void	check_if_dead(t_symposium *s);
 
 /*
@@ -25,7 +25,7 @@ int	main(int argc, char **argv)
 {
 	t_symposium	s;
 
-	if (input_check(argc, argv) != OK)
+	if (check_input(argc, argv) != OK)
 		return (1);
 	if (symposium_init(argc, argv, &s) != OK)
 		return (2);
@@ -41,7 +41,7 @@ int	main(int argc, char **argv)
 	Checks number of arguments and that the value of each argument
 	is bigger than 0
 */
-static int	input_check(int argc, char **argv)
+static int	check_input(int argc, char **argv)
 {
 	int	i;
 
@@ -62,6 +62,8 @@ static int	input_check(int argc, char **argv)
 	return (0);
 }
 
+//printf("last %ld, start %ld, ttd %d\n",
+//	s->philos[i].last_meal, s->start, s->time_to_die);
 static void	check_if_dead(t_symposium *s)
 {
 	int			i;
@@ -71,13 +73,13 @@ static void	check_if_dead(t_symposium *s)
 		i = 0;
 		while (i < s->nb_philo)
 		{
-			//printf("%d start : %ld\n", i, s->start);
-			//printf("%d last meal : %ld\n", i, s->philos[i].last_meal);
 			if (get_time(s) - s->philos[i].last_meal > s->time_to_die)
 			{
+				pthread_mutex_lock(s->death);
 				s->dead = TRUE;
-				printf("%ld %d died\n", get_time(s) - s->start, s->philos[i].id);
-				printf("last %ld, start %ld, ttd %d\n", s->philos[i].last_meal, s->start, s->time_to_die);
+				printf("%ld %d died\n",
+					get_time(s) - s->start, s->philos[i].id);
+				pthread_mutex_unlock(s->death);
 				break ;
 			}
 			i++;

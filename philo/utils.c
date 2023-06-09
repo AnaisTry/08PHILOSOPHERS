@@ -6,7 +6,7 @@
 /*   By: angassin <angassin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 20:18:48 by angassin          #+#    #+#             */
-/*   Updated: 2023/06/09 12:40:42 by angassin         ###   ########.fr       */
+/*   Updated: 2023/06/09 14:15:22 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,15 +57,16 @@ time_t	get_time(t_symposium *s)
 
 	if (gettimeofday(&current_time, NULL) != OK)
 		return (error_exit(s, "Could not get current time"));
-	time_in_milliseconds = current_time.tv_sec * 1000
-		+ current_time.tv_usec / 1000;
+	time_in_milliseconds = current_time.tv_sec * 1000 + current_time.tv_usec
+		/ 1000;
 	return (time_in_milliseconds);
 }
 
 void	ft_usleep(time_t time)
 {
-	time_t	start = get_time(NULL);
+	time_t	start;
 
+	start = get_time(NULL);
 	while (get_time(NULL) < start + time)
 	{
 		usleep(100);

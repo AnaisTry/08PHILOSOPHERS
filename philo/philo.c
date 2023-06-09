@@ -6,43 +6,39 @@
 /*   By: angassin <angassin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 23:14:26 by angassin          #+#    #+#             */
-/*   Updated: 2023/06/09 12:41:48 by angassin         ###   ########.fr       */
+/*   Updated: 2023/06/09 16:43:27 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+static t_bool	eat(t_philo *p);
+static void		print_state(t_philo *p, const char *message);
+
+/* Routine of the threads */
+//printf("%d last meal : %ld\n", p->id, p->last_meal);
+//printf("%ld, Ending thread %d\n", get_time(p->dinner), p->id);
 static void	*philo(void *arg)
 {
 	t_philo		*p;
 
 	p = arg;
-	//printf("%d last meal : %ld\n", p->id, p->last_meal);
-	while (p->dinner->dead == FALSE)
+	while (!p->dinner->dead)
 	{
 		if (p->id % 2 == EVEN)
 			usleep(100);
-		pthread_mutex_lock(p->left_fork);
-		printf("%ld %d has taken a fork\n",
-			get_time(p->dinner) - p->dinner->start, p->id);
-		pthread_mutex_lock(p->right_fork);
-		p->last_meal = get_time(p->dinner);
-		printf("%ld %d has taken a fork\n",
-			get_time(p->dinner) - p->dinner->start, p->id);
-		printf("%ld %d is eating\n",
-			get_time(p->dinner) - p->dinner->start, p->id);
-		ft_usleep(p->dinner->time_to_eat);
-		pthread_mutex_unlock(p->left_fork);
-		pthread_mutex_unlock(p->right_fork);
-		if (p->dinner->dead == TRUE)
+		if (p->dinner->dead)
 			break ;
-		printf("%ld %d is sleeping\n", get_time(p->dinner) - p->dinner->start, p->id);
+		if (!eat(p))
+			break ;
+		if (p->dinner->dead)
+			break ;
+		print_state(p, "%ld %d is sleeping\n");
 		ft_usleep(p->dinner->time_to_sleep);
-		if (p->dinner->dead == TRUE)
+		if (p->dinner->dead)
 			break ;
-		printf("%ld %d is thinking\n", get_time(p->dinner) - p->dinner->start, p->id);
+		print_state(p, "%ld %d is thinking\n");
 	}
-	//printf("%ld, Ending thread %d\n", get_time(p->dinner), p->id);
 	return (NULL);
 }
 
@@ -83,7 +79,7 @@ int	thread_wait(t_symposium *s)
 	i = 0;
 	while (i < s->nb_philo)
 	{
-		printf("destroying fork #%d\n", i);
+		//printf("destroying fork #%d\n", i);
 		pthread_mutex_destroy(&s->forks[i]);
 		i++;
 	}
@@ -92,4 +88,33 @@ int	thread_wait(t_symposium *s)
 	pthread_mutex_destroy(s->death);
 	free(s->death);
 	return (0);
+}
+
+static t_bool	eat(t_philo *p)
+{
+	pthread_mutex_lock(p->left_fork);
+	print_state(p, "%ld %d has taken a fork\n");
+	if (p->dinner->nb_philo == 1)
+	{
+		pthread_mutex_unlock(p->left_fork);
+		return (FALSE);
+	}
+	pthread_mutex_lock(p->right_fork);
+	p->last_meal = get_time(p->dinner);
+	print_state(p, "%ld %d has taken a fork\n");
+	pthread_mutex_lock(p->dinner->death);
+	print_state(p, "%ld %d is eating\n");
+	pthread_mutex_unlock(p->dinner->death);
+	ft_usleep(p->dinner->time_to_eat);
+	pthread_mutex_unlock(p->left_fork);
+	pthread_mutex_unlock(p->right_fork);
+	return (TRUE);
+}
+
+static void	print_state(t_philo *p, const char *message)
+{
+	if (!p->dinner->dead)
+	{
+		printf(message, get_time(p->dinner) - p->dinner->start, p->id);
+	}
 }
