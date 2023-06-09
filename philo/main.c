@@ -6,7 +6,7 @@
 /*   By: angassin <angassin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 17:30:28 by angassin          #+#    #+#             */
-/*   Updated: 2023/06/09 15:44:49 by angassin         ###   ########.fr       */
+/*   Updated: 2023/06/09 16:53:51 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,10 @@ static int	check_input(int argc, char **argv)
 	return (0);
 }
 
-//printf("last %ld, start %ld, ttd %d\n",
-//	s->philos[i].last_meal, s->start, s->time_to_die);
+/*
+	Loop repetitively on the threads as long as one philo isn't dead
+	Lock the death mutex the time to print who is dead
+*/
 static void	check_if_dead(t_symposium *s)
 {
 	int			i;
