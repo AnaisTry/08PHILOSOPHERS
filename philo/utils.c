@@ -6,7 +6,7 @@
 /*   By: angassin <angassin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 20:18:48 by angassin          #+#    #+#             */
-/*   Updated: 2023/06/09 14:15:22 by angassin         ###   ########.fr       */
+/*   Updated: 2023/06/12 15:39:27 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,33 +41,42 @@ int	ft_atoi(const char *str)
 	return (nb * sign);
 }
 
-int	error_exit(t_symposium *s, char *message)
+int	error_exit(t_symposium *s, char *message, int status)
 {
+	int	i;
+
+	i = 0;
+	if (status > 0)
+	{
+		while (i < status && i < s->nb_philo)
+		{
+			pthread_mutex_destroy(&s->forks[i]);
+			i++;
+		}
+		if (i < status)
+			pthread_mutex_destroy(s->death);
+	}
 	free(s->philos);
 	free(s->forks);
 	free(s->death);
-	perror(message);
+	printf("%s\n", message);
 	return (-1);
 }
 
-time_t	get_time(t_symposium *s)
+time_t	get_time(void)
 {
 	struct timeval	current_time;
-	time_t			time_in_milliseconds;
 
-	if (gettimeofday(&current_time, NULL) != OK)
-		return (error_exit(s, "Could not get current time"));
-	time_in_milliseconds = current_time.tv_sec * 1000 + current_time.tv_usec
-		/ 1000;
-	return (time_in_milliseconds);
+	gettimeofday(&current_time, NULL);
+	return (current_time.tv_sec * 1000 + current_time.tv_usec / 1000);
 }
 
 void	ft_usleep(time_t time)
 {
 	time_t	start;
 
-	start = get_time(NULL);
-	while (get_time(NULL) < start + time)
+	start = get_time();
+	while (get_time() < start + time)
 	{
 		usleep(100);
 	}

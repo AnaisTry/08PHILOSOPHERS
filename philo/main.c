@@ -6,7 +6,7 @@
 /*   By: angassin <angassin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 17:30:28 by angassin          #+#    #+#             */
-/*   Updated: 2023/06/12 14:16:45 by angassin         ###   ########.fr       */
+/*   Updated: 2023/06/12 15:49:24 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int		check_input(int argc, char **argv);
 static void		check_if_stop(t_symposium *s);
-static void		philo_dies(t_philo *p);
+static void		philo_dies(t_philo *p, int status);
 static t_bool	is_full(t_philo *p);
 
 /*
@@ -76,19 +76,20 @@ static void	check_if_stop(t_symposium *s)
 
 	while (TRUE)
 	{
+		s->all_full = 0;
 		i = 0;
 		while (i < s->nb_philo)
 		{
-			if (get_time(s) - s->philos[i].last_meal > s->time_to_die)
+			if (get_time() - s->philos[i].last_meal > s->time_to_die)
 			{
-				philo_dies(&s->philos[i]);
+				philo_dies(&s->philos[i], TRUE);
 				break ;
 			}
 			if (is_full(&s->philos[i]))
 				s->all_full++;
 			if (s->all_full == s->nb_philo)
 			{
-				s->dead = TRUE;
+				philo_dies(&s->philos[i], FALSE);
 				break ;
 			}
 			++i;
@@ -98,17 +99,19 @@ static void	check_if_stop(t_symposium *s)
 	}
 }
 
-static void	philo_dies(t_philo *p)
+static void	philo_dies(t_philo *p, int status)
 {
 	pthread_mutex_lock(p->dinner->death);
 	p->dinner->dead = TRUE;
-	printf("%ld %d died\n", get_time(p->dinner) - p->dinner->start, p->id);
+	if (status == TRUE)
+		printf("%ld %d died\n", get_time() - p->dinner->start, p->id);
 	pthread_mutex_unlock(p->dinner->death);
 }
 
 static t_bool	is_full(t_philo *p)
 {
-	if (p->nb_meals == p->dinner->max_nb_meals)
+	if (p->nb_meals >= p->dinner->max_nb_meals
+		&& p->dinner->max_nb_meals != INFINITE)
 		return (TRUE);
 	return (FALSE);
 }

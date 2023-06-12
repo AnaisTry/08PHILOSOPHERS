@@ -6,7 +6,7 @@
 /*   By: angassin <angassin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 23:14:26 by angassin          #+#    #+#             */
-/*   Updated: 2023/06/12 14:09:38 by angassin         ###   ########.fr       */
+/*   Updated: 2023/06/12 15:39:36 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,12 @@
 static t_bool	eat(t_philo *p);
 static void		print_state(t_philo *p, const char *message);
 
-/* Routine of the threads */
-//printf("%d last meal : %ld\n", p->id, p->last_meal);
-//printf("%ld, Ending thread %d\n", get_time(p->dinner), p->id);
+/* 
+	Threads routine 
+	printf("%d last meal : %ld\n", p->id, p->last_meal);
+	printf("%ld, Ending thread %d\n", get_time(p->dinner), p->id);	
+*/
+
 static void	*philo(void *arg)
 {
 	t_philo	*p;
@@ -33,11 +36,11 @@ static void	*philo(void *arg)
 			break ;
 		if (p->dinner->dead)
 			break ;
-		print_state(p, "%ld %d is sleeping\n");
+		print_state(p, " is sleeping\n");
 		ft_usleep(p->dinner->time_to_sleep);
 		if (p->dinner->dead)
 			break ;
-		print_state(p, "%ld %d is thinking\n");
+		print_state(p, " is thinking\n");
 	}
 	return (NULL);
 }
@@ -59,13 +62,16 @@ int	thread_create(t_symposium *s)
 			s->philos[i].right_fork = &s->forks[i + 1];
 		if (pthread_create(&s->philos[i].p_id, NULL, &philo,
 				&s->philos[i]) != OK)
-			return (error_exit(s, "could not create thread"));
+			return (error_exit(s, "could not create thread\n", s->nb_philo + 1));
 		i++;
 	}
 	return (0);
 }
 
-//printf("destroying fork #%d\n", i);
+/*
+	Wait for the threads to finish their execution and terminate cleanly
+	printf("destroying fork #%d\n", i);
+*/
 int	thread_wait(t_symposium *s)
 {
 	int	i;
@@ -74,7 +80,7 @@ int	thread_wait(t_symposium *s)
 	while (i < s->nb_philo)
 	{
 		if (pthread_join(s->philos[i].p_id, NULL) != OK)
-			return (error_exit(s, "could not join thread"));
+			return (error_exit(s, "could not join thread", s->nb_philo + 1));
 		i++;
 	}
 	i = 0;
@@ -94,17 +100,17 @@ int	thread_wait(t_symposium *s)
 static t_bool	eat(t_philo *p)
 {
 	pthread_mutex_lock(p->left_fork);
-	print_state(p, "%ld %d has taken a fork\n");
+	print_state(p, " has taken a fork\n");
 	if (p->dinner->nb_philo == 1)
 	{
 		pthread_mutex_unlock(p->left_fork);
 		return (FALSE);
 	}
 	pthread_mutex_lock(p->right_fork);
-	p->last_meal = get_time(p->dinner);
-	print_state(p, "%ld %d has taken a fork\n");
+	p->last_meal = get_time();
+	print_state(p, " has taken a fork\n");
 	pthread_mutex_lock(p->dinner->death);
-	print_state(p, "%ld %d is eating\n");
+	print_state(p, " is eating\n");
 	pthread_mutex_unlock(p->dinner->death);
 	p->nb_meals++;
 	ft_usleep(p->dinner->time_to_eat);
@@ -117,6 +123,7 @@ static void	print_state(t_philo *p, const char *message)
 {
 	if (!p->dinner->dead)
 	{
-		printf(message, get_time(p->dinner) - p->dinner->start, p->id);
+		printf("%ld %d %s", get_time() - p->dinner->start, p->id,
+			message);
 	}
 }
