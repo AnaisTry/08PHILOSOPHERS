@@ -6,7 +6,7 @@
 /*   By: angassin <angassin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 16:00:36 by angassin          #+#    #+#             */
-/*   Updated: 2023/06/12 12:13:42 by angassin         ###   ########.fr       */
+/*   Updated: 2023/06/12 15:53:43 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ static int	thread_create(char **argv, pthread_t *p, int *p_nb)
 			return (2);
 		*p_nb = i;
 		if (pthread_create(&p[i], NULL, &philo, p_nb) != OK)
-			return (error_exit(p_nb, "could not create thread\n"));
+			return (error_exit(p_nb, "could not create thread\n", 0));
 		i++;
 	}
 	return (0);
@@ -90,7 +90,7 @@ static int	thread_wait(char **argv, pthread_t *p, int *p_nb)
 	while (i < ft_atoi(argv[1]) + 1)
 	{
 		if (pthread_join(p[i], (void **)&p_nb) != OK)
-			return (error_exit(p_nb, "could not join thread\n"));
+			return (error_exit(p_nb, "could not join thread\n", 0));
 		i++;
 		free(p_nb);
 	}
