@@ -6,14 +6,16 @@
 /*   By: angassin <angassin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 17:30:28 by angassin          #+#    #+#             */
-/*   Updated: 2023/06/09 16:53:51 by angassin         ###   ########.fr       */
+/*   Updated: 2023/06/12 14:13:11 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static int	check_input(int argc, char **argv);
-static void	check_if_dead(t_symposium *s);
+static int		check_input(int argc, char **argv);
+static void		check_if_stop(t_symposium *s);
+static void		philo_dies(t_philo *p);
+static t_bool	is_full(t_philo *p);
 
 /*
 	Program that creates threads that share mutual exclusion synchronization 
@@ -31,7 +33,7 @@ int	main(int argc, char **argv)
 		return (2);
 	if (thread_create(&s) != OK)
 		return (3);
-	check_if_dead(&s);
+	check_if_stop(&s);
 	if (thread_wait(&s) != OK)
 		return (4);
 	return (0);
@@ -40,6 +42,7 @@ int	main(int argc, char **argv)
 /*
 	Checks number of arguments and that the value of each argument
 	is bigger than 0
+	printf("nb philo : %d\n", ft_atoi(argv[1]));
 */
 static int	check_input(int argc, char **argv)
 {
@@ -51,7 +54,6 @@ static int	check_input(int argc, char **argv)
 			" time_to_sleep [number_of_times_each_philosopher_must_eat]\n");
 		return (1);
 	}
-	printf("nb philo : %d\n", ft_atoi(argv[1]));
 	i = 1;
 	while (i < argc)
 	{
@@ -64,11 +66,13 @@ static int	check_input(int argc, char **argv)
 
 /*
 	Loop repetitively on the threads as long as one philo isn't dead
-	Lock the death mutex the time to print who is dead
+	or, if the condition is given, and they are still alive,
+	as long as they have not all eaten.
+	Locks the death mutex the time to print who is dead
 */
-static void	check_if_dead(t_symposium *s)
+static void	check_if_stop(t_symposium *s)
 {
-	int			i;
+	int	i;
 
 	while (TRUE)
 	{
@@ -77,16 +81,34 @@ static void	check_if_dead(t_symposium *s)
 		{
 			if (get_time(s) - s->philos[i].last_meal > s->time_to_die)
 			{
-				pthread_mutex_lock(s->death);
-				s->dead = TRUE;
-				printf("%ld %d died\n",
-					get_time(s) - s->start, s->philos[i].id);
-				pthread_mutex_unlock(s->death);
+				philo_dies(&s->philos[i]);
 				break ;
 			}
-			i++;
+			if (is_full(&s->philos[i]))
+				s->all_full++;
+			if (s->all_full == s->nb_philo)
+			{
+				s->dead = TRUE;
+				break ;
+			}
+			++i;
 		}
 		if (s->dead == TRUE)
 			break ;
 	}
+}
+
+static void	philo_dies(t_philo *p)
+{
+	pthread_mutex_lock(p->dinner->death);
+	p->dinner->dead = TRUE;
+	printf("%ld %d died\n", get_time(p->dinner) - p->dinner->start, p->id);
+	pthread_mutex_unlock(p->dinner->death);
+}
+
+static t_bool	is_full(t_philo *p)
+{
+	if (p->nb_meals == p->dinner->max_nb_meals)
+		return (TRUE);
+	return (FALSE);
 }

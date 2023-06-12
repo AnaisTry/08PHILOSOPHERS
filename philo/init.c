@@ -6,7 +6,7 @@
 /*   By: angassin <angassin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 17:02:29 by angassin          #+#    #+#             */
-/*   Updated: 2023/06/05 17:36:49 by angassin         ###   ########.fr       */
+/*   Updated: 2023/06/12 13:31:22 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 static int	mutexes_init(t_symposium *s);
 
+// printf("start time : %ld\n", s->start);
 int	symposium_init(int argc, char **argv, t_symposium *s)
 {	
 	s->nb_philo = ft_atoi(argv[1]);
@@ -29,14 +30,16 @@ int	symposium_init(int argc, char **argv, t_symposium *s)
 	s->time_to_eat = ft_atoi(argv[3]);
 	s->time_to_sleep = ft_atoi(argv[4]);
 	if (argc == 6)
-		s->nb_meals = ft_atoi(argv[5]);
+		s->max_nb_meals = ft_atoi(argv[5]);
+	else
+		s->max_nb_meals = INFINITE;
+	s->all_full = 0;
 	s->death = malloc(sizeof(*s->death));
 	if (s->death == NULL)
 		return (error_exit(s, "Could not allocate the death pointer"));
 	if (mutexes_init(s) != OK)
 		return (1);
 	s->start = get_time(s);
-	printf("start time : %ld\n", s->start);
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: angassin <angassin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 23:14:26 by angassin          #+#    #+#             */
-/*   Updated: 2023/06/09 17:03:25 by angassin         ###   ########.fr       */
+/*   Updated: 2023/06/12 14:09:38 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void		print_state(t_philo *p, const char *message);
 //printf("%ld, Ending thread %d\n", get_time(p->dinner), p->id);
 static void	*philo(void *arg)
 {
-	t_philo		*p;
+	t_philo	*p;
 
 	p = arg;
 	while (!p->dinner->dead)
@@ -56,15 +56,16 @@ int	thread_create(t_symposium *s)
 		if (i == s->nb_philo - 1)
 			s->philos[i].right_fork = &s->forks[0];
 		else
-			s->philos[i].right_fork = &s->forks [i + 1];
-		if (pthread_create(&s->philos[i].p_id, NULL, &philo, &s->philos[i])
-			!= OK)
+			s->philos[i].right_fork = &s->forks[i + 1];
+		if (pthread_create(&s->philos[i].p_id, NULL, &philo,
+				&s->philos[i]) != OK)
 			return (error_exit(s, "could not create thread"));
 		i++;
 	}
 	return (0);
 }
 
+//printf("destroying fork #%d\n", i);
 int	thread_wait(t_symposium *s)
 {
 	int	i;
@@ -79,7 +80,6 @@ int	thread_wait(t_symposium *s)
 	i = 0;
 	while (i < s->nb_philo)
 	{
-		//printf("destroying fork #%d\n", i);
 		pthread_mutex_destroy(&s->forks[i]);
 		i++;
 	}
@@ -90,6 +90,7 @@ int	thread_wait(t_symposium *s)
 	return (0);
 }
 
+// printf("%d nb_meals : %d\n", p->id, p->nb_meals);
 static t_bool	eat(t_philo *p)
 {
 	pthread_mutex_lock(p->left_fork);
@@ -105,6 +106,7 @@ static t_bool	eat(t_philo *p)
 	pthread_mutex_lock(p->dinner->death);
 	print_state(p, "%ld %d is eating\n");
 	pthread_mutex_unlock(p->dinner->death);
+	p->nb_meals++;
 	ft_usleep(p->dinner->time_to_eat);
 	pthread_mutex_unlock(p->left_fork);
 	pthread_mutex_unlock(p->right_fork);

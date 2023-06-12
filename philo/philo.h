@@ -6,7 +6,7 @@
 /*   By: angassin <angassin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 17:27:34 by angassin          #+#    #+#             */
-/*   Updated: 2023/06/10 16:17:39 by angassin         ###   ########.fr       */
+/*   Updated: 2023/06/12 13:30:50 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 
 # define OK 0
 # define EVEN 0
+# define INFINITE -1
 
 /*									[Typedefs]								*/
 
@@ -47,6 +48,7 @@ typedef struct s_philo
 	time_t					last_meal;
 	pthread_mutex_t			*left_fork;
 	pthread_mutex_t			*right_fork;
+	int						nb_meals;
 	t_symposium				*dinner;
 }							t_philo;
 
@@ -56,7 +58,8 @@ struct						s_symposium
 	int						time_to_die;
 	int						time_to_eat;
 	int						time_to_sleep;
-	int						nb_meals;
+	int						max_nb_meals;
+	int						all_full;
 	time_t					start;
 	t_philo					*philos;
 	pthread_mutex_t			*forks;
