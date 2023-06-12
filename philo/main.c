@@ -6,7 +6,7 @@
 /*   By: angassin <angassin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 17:30:28 by angassin          #+#    #+#             */
-/*   Updated: 2023/06/12 14:13:11 by angassin         ###   ########.fr       */
+/*   Updated: 2023/06/12 14:16:45 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ static int	check_input(int argc, char **argv)
 }
 
 /*
-	Loop repetitively on the threads as long as one philo isn't dead
+	Loops repetitively on the threads as long as one philo isn't dead
 	or, if the condition is given, and they are still alive,
 	as long as they have not all eaten.
 	Locks the death mutex the time to print who is dead
