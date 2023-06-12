@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_thread.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: angassin <angassin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: angassin <angassin@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 16:00:36 by angassin          #+#    #+#             */
-/*   Updated: 2023/05/30 18:27:58 by angassin         ###   ########.fr       */
+/*   Updated: 2023/06/12 12:00:29 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,3 +96,7 @@ static int	thread_wait(char **argv, pthread_t *p, int *p_nb)
 	}
 	return (0);
 }
+//int	i;
+
+	//i = 0;
+	//while (p->dinner->nb_meals == 0 || i < p->dinner->nb_meals)
