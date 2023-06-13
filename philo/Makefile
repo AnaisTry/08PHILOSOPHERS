@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: angassin <angassin@student.s19.be>         +#+  +:+       +#+         #
+#    By: angassin <angassin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/12 12:10:21 by angassin          #+#    #+#              #
-#    Updated: 2023/06/02 23:13:59 by angassin         ###   ########.fr        #
+#    Updated: 2023/06/13 17:49:55 by angassin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,7 +39,7 @@ ifeq ($(THREAD_SANI), 1)
 endif
 
 ifeq ($(SANI), 1)
-	CFLAGS += 	-fsanitize=address #-fsanitize=undefined \
+	CFLAGS += 	-fsanitize=address -fsanitize=undefined \
 				-fno-sanitize-recover=all	-fsanitize=float-divide-by-zero \
 				-fsanitize=float-cast-overflow -fno-sanitize=null \
 				-fno-sanitize=alignment\
