@@ -6,7 +6,7 @@
 /*   By: angassin <angassin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 17:02:29 by angassin          #+#    #+#             */
-/*   Updated: 2023/06/12 15:32:35 by angassin         ###   ########.fr       */
+/*   Updated: 2023/06/14 14:37:40 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int	symposium_init(int argc, char **argv, t_symposium *s)
 	s->nb_philo = ft_atoi(argv[1]);
 	s->forks = NULL;
 	s->death = NULL;
+	s->dead = FALSE;
 	s->philos = malloc(sizeof(*s->philos) * s->nb_philo);
 	if (s->philos == NULL)
 		return (error_exit(s, "Could not allocate the array of threads", 0));
