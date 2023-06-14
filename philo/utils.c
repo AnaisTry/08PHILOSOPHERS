@@ -6,7 +6,7 @@
 /*   By: angassin <angassin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 20:18:48 by angassin          #+#    #+#             */
-/*   Updated: 2023/06/14 16:15:20 by angassin         ###   ########.fr       */
+/*   Updated: 2023/06/14 16:52:51 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void	ft_usleep(time_t time)
 	}
 }
 
-t_bool	is_dead(t_symposium *s)
+t_bool	someone_is_dead(t_symposium *s)
 {
 	pthread_mutex_lock(s->death);
 	if (s->dead)

@@ -6,7 +6,7 @@
 /*   By: angassin <angassin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 23:14:26 by angassin          #+#    #+#             */
-/*   Updated: 2023/06/14 16:47:37 by angassin         ###   ########.fr       */
+/*   Updated: 2023/06/14 16:52:21 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,17 @@ static void	*philo(void *arg)
 	t_philo	*p;
 
 	p = arg;
-	while (!is_dead(p->dinner))
+	while (!someone_is_dead(p->dinner))
 	{
 		if (p->id % 2 == EVEN)
 			usleep(100);
 		if (!eat(p))
 			break ;
-		if (is_dead(p->dinner))
+		if (someone_is_dead(p->dinner))
 			break ;
 		print_state(p, " is sleeping\n");
 		ft_usleep(p->dinner->time_to_sleep);
-		if (is_dead(p->dinner))
+		if (someone_is_dead(p->dinner))
 			break ;
 		print_state(p, " is thinking\n");
 	}
@@ -122,7 +122,7 @@ int	thread_wait(t_symposium *s)
 
 static void	print_state(t_philo *p, const char *message)
 {
-	if (!is_dead(p->dinner))
+	if (!someone_is_dead(p->dinner))
 	{
 		pthread_mutex_lock(p->dinner->print);
 		printf("%ld %d %s", get_time() - p->dinner->start, p->id,
