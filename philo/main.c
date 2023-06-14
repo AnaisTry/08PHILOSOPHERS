@@ -6,7 +6,7 @@
 /*   By: angassin <angassin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 17:30:28 by angassin          #+#    #+#             */
-/*   Updated: 2023/06/14 14:57:36 by angassin         ###   ########.fr       */
+/*   Updated: 2023/06/14 15:23:28 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int		check_input(int argc, char **argv);
 static void		check_if_stop(t_symposium *s);
-static void		philo_dies(t_philo *p, int status);
+static void		philo_dies(t_philo *p, t_bool status);
 static t_bool	is_full(t_philo *p);
 
 /*
@@ -99,7 +99,7 @@ static void	check_if_stop(t_symposium *s)
 	}
 }
 
-static void	philo_dies(t_philo *p, int status)
+static void	philo_dies(t_philo *p, t_bool status)
 {
 	pthread_mutex_lock(p->dinner->death);
 	p->dinner->dead = TRUE;

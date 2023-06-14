@@ -6,7 +6,7 @@
 /*   By: angassin <angassin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 23:14:26 by angassin          #+#    #+#             */
-/*   Updated: 2023/06/14 15:01:09 by angassin         ###   ########.fr       */
+/*   Updated: 2023/06/14 15:27:13 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,15 +30,15 @@ static void	*philo(void *arg)
 	{
 		if (p->id % 2 == EVEN)
 			usleep(100);
-		if (p->dinner->dead)
+		if (death_check(p->dinner))
 			break ;
 		if (!eat(p))
 			break ;
-		if (p->dinner->dead)
+		if (death_check(p->dinner))
 			break ;
 		print_state(p, " is sleeping\n");
 		ft_usleep(p->dinner->time_to_sleep);
-		if (p->dinner->dead)
+		if (death_check(p->dinner))
 			break ;
 		print_state(p, " is thinking\n");
 	}

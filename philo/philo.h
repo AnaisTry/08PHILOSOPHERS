@@ -6,7 +6,7 @@
 /*   By: angassin <angassin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 17:27:34 by angassin          #+#    #+#             */
-/*   Updated: 2023/06/14 14:54:33 by angassin         ###   ########.fr       */
+/*   Updated: 2023/06/14 15:23:50 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,5 +85,6 @@ int		ft_atoi(const char *str);
 int		error_exit(t_symposium *s, char *message, int status);
 time_t	get_time(void);
 void	ft_usleep(time_t time);
+t_bool	death_check(t_symposium *s);
 
 #endif
