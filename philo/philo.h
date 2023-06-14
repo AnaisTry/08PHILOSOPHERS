@@ -6,7 +6,7 @@
 /*   By: angassin <angassin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 17:27:34 by angassin          #+#    #+#             */
-/*   Updated: 2023/06/12 15:29:46 by angassin         ###   ########.fr       */
+/*   Updated: 2023/06/14 14:54:33 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@
 # include <unistd.h>
 // gettimeofday
 # include <sys/time.h>
+
+# include <stdatomic.h>
 
 /*									[Macros]								*/
 
@@ -45,7 +47,7 @@ typedef struct s_philo
 {
 	int						id;
 	pthread_t				p_id;
-	time_t					last_meal;
+	_Atomic time_t			last_meal;
 	pthread_mutex_t			*left_fork;
 	pthread_mutex_t			*right_fork;
 	int						nb_meals;

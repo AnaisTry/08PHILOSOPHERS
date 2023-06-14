@@ -6,7 +6,7 @@
 /*   By: angassin <angassin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 17:30:28 by angassin          #+#    #+#             */
-/*   Updated: 2023/06/12 15:49:24 by angassin         ###   ########.fr       */
+/*   Updated: 2023/06/14 14:57:36 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,8 +110,13 @@ static void	philo_dies(t_philo *p, int status)
 
 static t_bool	is_full(t_philo *p)
 {
+	pthread_mutex_lock(p->dinner->death);
 	if (p->nb_meals >= p->dinner->max_nb_meals
 		&& p->dinner->max_nb_meals != INFINITE)
+	{
+		pthread_mutex_unlock(p->dinner->death);
 		return (TRUE);
+	}
+	pthread_mutex_unlock(p->dinner->death);
 	return (FALSE);
 }

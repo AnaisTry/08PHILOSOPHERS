@@ -6,7 +6,7 @@
 /*   By: angassin <angassin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 16:00:36 by angassin          #+#    #+#             */
-/*   Updated: 2023/06/12 15:53:43 by angassin         ###   ########.fr       */
+/*   Updated: 2023/06/14 14:59:59 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 static int	thread_create(char **argv, pthread_t *p, int *p_nb);
 static int	thread_wait(char **argv, pthread_t *p, int *p_nb);
-
 
 int	main(int argc, char **argv)
 {
