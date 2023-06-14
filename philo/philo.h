@@ -6,7 +6,7 @@
 /*   By: angassin <angassin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 17:27:34 by angassin          #+#    #+#             */
-/*   Updated: 2023/06/14 15:23:50 by angassin         ###   ########.fr       */
+/*   Updated: 2023/06/14 16:30:15 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ typedef struct s_philo
 	_Atomic time_t			last_meal;
 	pthread_mutex_t			*left_fork;
 	pthread_mutex_t			*right_fork;
-	int						nb_meals;
+	atomic_int				nb_meals;
 	t_symposium				*dinner;
 }							t_philo;
 
@@ -60,14 +60,14 @@ struct						s_symposium
 	int						time_to_die;
 	int						time_to_eat;
 	int						time_to_sleep;
-	int						max_nb_meals;
+	atomic_int				max_nb_meals;
 	int						all_full;
 	time_t					start;
 	t_philo					*philos;
 	pthread_mutex_t			*forks;
 	pthread_mutex_t			*death;
 	t_bool					dead;
-
+	pthread_mutex_t			*print;
 };
 
 /*									[Src]									*/
@@ -85,6 +85,6 @@ int		ft_atoi(const char *str);
 int		error_exit(t_symposium *s, char *message, int status);
 time_t	get_time(void);
 void	ft_usleep(time_t time);
-t_bool	death_check(t_symposium *s);
+t_bool	is_dead(t_symposium *s);
 
 #endif

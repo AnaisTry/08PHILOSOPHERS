@@ -6,7 +6,7 @@
 /*   By: angassin <angassin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 20:18:48 by angassin          #+#    #+#             */
-/*   Updated: 2023/06/14 15:24:00 by angassin         ###   ########.fr       */
+/*   Updated: 2023/06/14 16:15:20 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,13 @@ int	error_exit(t_symposium *s, char *message, int status)
 		}
 		if (i < status)
 			pthread_mutex_destroy(s->death);
+		if (i < status)
+			pthread_mutex_destroy(s->print);
 	}
 	free(s->philos);
 	free(s->forks);
 	free(s->death);
+	free(s->print);
 	printf("%s\n", message);
 	return (-1);
 }
@@ -82,7 +85,7 @@ void	ft_usleep(time_t time)
 	}
 }
 
-t_bool	death_check(t_symposium *s)
+t_bool	is_dead(t_symposium *s)
 {
 	pthread_mutex_lock(s->death);
 	if (s->dead)
