@@ -6,7 +6,7 @@
 /*   By: angassin <angassin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 17:27:34 by angassin          #+#    #+#             */
-/*   Updated: 2023/06/14 16:52:10 by angassin         ###   ########.fr       */
+/*   Updated: 2023/06/14 17:10:29 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,16 @@
 /*									[Includes]								*/
 
 # include <pthread.h>
+# include <stdatomic.h>
+# include <limits.h>
 // printf
 # include <stdio.h>
 // malloc, free
 # include <stdlib.h>
-# include <limits.h>
 // usleep
 # include <unistd.h>
 // gettimeofday
 # include <sys/time.h>
-
-# include <stdatomic.h>
 
 /*									[Macros]								*/
 

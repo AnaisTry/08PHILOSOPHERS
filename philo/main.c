@@ -6,7 +6,7 @@
 /*   By: angassin <angassin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 17:30:28 by angassin          #+#    #+#             */
-/*   Updated: 2023/06/14 15:23:28 by angassin         ###   ########.fr       */
+/*   Updated: 2023/06/14 17:08:29 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,8 @@ static int	check_input(int argc, char **argv)
 /*
 	Loops repetitively on the threads as long as one philo isn't dead
 	or, if the condition is given, and they are still alive,
-	as long as they have not all eaten.
+	as long as they have not all eaten at least 
+	number_of_times_each_philosopher_must_eat.
 	Locks the death mutex the time to print who is dead
 */
 static void	check_if_stop(t_symposium *s)
@@ -110,13 +111,8 @@ static void	philo_dies(t_philo *p, t_bool status)
 
 static t_bool	is_full(t_philo *p)
 {
-	pthread_mutex_lock(p->dinner->death);
 	if (p->nb_meals >= p->dinner->max_nb_meals
 		&& p->dinner->max_nb_meals != INFINITE)
-	{
-		pthread_mutex_unlock(p->dinner->death);
 		return (TRUE);
-	}
-	pthread_mutex_unlock(p->dinner->death);
 	return (FALSE);
 }
