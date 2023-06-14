@@ -6,7 +6,7 @@
 #    By: angassin <angassin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/12 12:10:21 by angassin          #+#    #+#              #
-#    Updated: 2023/06/13 17:49:55 by angassin         ###   ########.fr        #
+#    Updated: 2023/06/14 18:05:41 by angassin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,7 +55,7 @@ endif
 SRC			= $(PHILO_SRC) $(UTILS_SRC)
 
 PHILO_SRC	= main.c init.c philo.c
-UTILS_SRC	= utils.c
+UTILS_SRC	= utils.c error.c
 
 OBJ			= $(SRC:.c=.o)
 

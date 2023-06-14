@@ -6,11 +6,20 @@
 /*   By: angassin <angassin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 20:18:48 by angassin          #+#    #+#             */
-/*   Updated: 2023/06/14 16:52:51 by angassin         ###   ########.fr       */
+/*   Updated: 2023/06/14 18:23:18 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+int	ft_isdigit(int c)
+{
+	if (c >= '0' && c <= '9')
+	{
+		return (1);
+	}
+	return (0);
+}
 
 int	ft_atoi(const char *str)
 {
@@ -39,31 +48,6 @@ int	ft_atoi(const char *str)
 		str++;
 	}
 	return (nb * sign);
-}
-
-int	error_exit(t_symposium *s, char *message, int status)
-{
-	int	i;
-
-	i = 0;
-	if (status > 0)
-	{
-		while (i < status && i < s->nb_philo)
-		{
-			pthread_mutex_destroy(&s->forks[i]);
-			i++;
-		}
-		if (i < status)
-			pthread_mutex_destroy(s->death);
-		if (i < status)
-			pthread_mutex_destroy(s->print);
-	}
-	free(s->philos);
-	free(s->forks);
-	free(s->death);
-	free(s->print);
-	printf("%s\n", message);
-	return (-1);
 }
 
 time_t	get_time(void)

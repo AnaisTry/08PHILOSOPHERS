@@ -6,7 +6,7 @@
 /*   By: angassin <angassin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 17:30:28 by angassin          #+#    #+#             */
-/*   Updated: 2023/06/14 17:08:29 by angassin         ###   ########.fr       */
+/*   Updated: 2023/06/14 18:21:26 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,14 @@ int	main(int argc, char **argv)
 }
 
 /*
-	Checks number of arguments and that the value of each argument
-	is bigger than 0
+	Checks number of arguments, that the type is correct and that
+	the value of each argument is bigger than 0
 	printf("nb philo : %d\n", ft_atoi(argv[1]));
 */
 static int	check_input(int argc, char **argv)
 {
 	int	i;
+	int	j;
 
 	if (argc < 5 || argc > 6)
 	{
@@ -57,8 +58,15 @@ static int	check_input(int argc, char **argv)
 	i = 1;
 	while (i < argc)
 	{
+		j = 0;
+		while (argv[i][j] != '\0')
+		{
+			if (ft_isdigit(argv[i][j]) == FALSE)
+				return (2);
+			j++;
+		}
 		if (ft_atoi(argv[i]) <= 0)
-			return (2);
+			return (3);
 		i++;
 	}
 	return (0);

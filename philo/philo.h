@@ -6,7 +6,7 @@
 /*   By: angassin <angassin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 17:27:34 by angassin          #+#    #+#             */
-/*   Updated: 2023/06/14 17:10:29 by angassin         ###   ########.fr       */
+/*   Updated: 2023/06/14 18:05:12 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,10 +80,13 @@ int		thread_wait(t_symposium *s);
 
 /*									[Utils]									*/
 
+// utils.c
+int		ft_isdigit(int c);
 int		ft_atoi(const char *str);
-int		error_exit(t_symposium *s, char *message, int status);
 time_t	get_time(void);
 void	ft_usleep(time_t time);
 t_bool	someone_is_dead(t_symposium *s);
 
+// error.c
+int		error_exit(t_symposium *s, char *message, int status);
 #endif
