@@ -6,7 +6,7 @@
 /*   By: angassin <angassin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 23:14:26 by angassin          #+#    #+#             */
-/*   Updated: 2023/06/14 17:52:46 by angassin         ###   ########.fr       */
+/*   Updated: 2023/06/15 14:16:54 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,11 @@ static void	*philo(void *arg)
 			break ;
 		if (someone_is_dead(p->dinner))
 			break ;
-		print_state(p, " is sleeping\n");
+		print_state(p, "is sleeping");
 		ft_usleep(p->dinner->time_to_sleep);
 		if (someone_is_dead(p->dinner))
 			break ;
-		print_state(p, " is thinking\n");
+		print_state(p, "is thinking");
 	}
 	return (NULL);
 }
@@ -73,7 +73,7 @@ int	thread_create(t_symposium *s)
 static t_bool	eat(t_philo *p)
 {
 	pthread_mutex_lock(p->left_fork);
-	print_state(p, " has taken a fork\n");
+	print_state(p, "has taken a fork");
 	if (p->dinner->nb_philo == 1)
 	{
 		pthread_mutex_unlock(p->left_fork);
@@ -83,8 +83,8 @@ static t_bool	eat(t_philo *p)
 	pthread_mutex_lock(p->dinner->death);
 	p->last_meal = get_time();
 	pthread_mutex_unlock(p->dinner->death);
-	print_state(p, " has taken a fork\n");
-	print_state(p, " is eating\n");
+	print_state(p, "has taken a fork");
+	print_state(p, "is eating");
 	pthread_mutex_lock(p->dinner->death);
 	p->nb_meals++;
 	pthread_mutex_unlock(p->dinner->death);
@@ -129,7 +129,7 @@ static void	print_state(t_philo *p, const char *message)
 	if (!someone_is_dead(p->dinner))
 	{
 		pthread_mutex_lock(p->dinner->print);
-		printf("%ld %d %s", get_time() - p->dinner->start, p->id,
+		printf("%ld %d %s\n", get_time() - p->dinner->start, p->id,
 			message);
 		pthread_mutex_unlock(p->dinner->print);
 	}
