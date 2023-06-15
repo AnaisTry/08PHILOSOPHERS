@@ -6,7 +6,7 @@
 /*   By: angassin <angassin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 23:14:26 by angassin          #+#    #+#             */
-/*   Updated: 2023/06/15 14:16:54 by angassin         ###   ########.fr       */
+/*   Updated: 2023/06/15 14:30:36 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,10 @@ static void	*philo(void *arg)
 	t_philo	*p;
 
 	p = arg;
+	if (p->id % 2 == EVEN)
+		usleep(100);
 	while (!someone_is_dead(p->dinner))
 	{
-		if (p->id % 2 == EVEN)
-			usleep(100);
 		if (!eat(p))
 			break ;
 		if (someone_is_dead(p->dinner))
