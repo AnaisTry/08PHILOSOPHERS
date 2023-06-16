@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: angassin <angassin@student.s19.be>         +#+  +:+       +#+        */
+/*   By: angassin <angassin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 23:14:26 by angassin          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2023/06/16 18:09:30 by angassin         ###   ########.fr       */
-=======
-/*   Updated: 2023/06/16 16:48:39 by angassin         ###   ########.fr       */
->>>>>>> 042de8b1290e12f3fde4584387557e93ff4654e0
+/*   Updated: 2023/06/16 19:30:38 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +91,7 @@ static t_bool	eat(t_philo *p)
 }
 
 /*
-	Wait for the threads to finish their execution and terminate cleanly
+	Waits for the threads to finish their execution and terminates cleanly
 	printf("destroying fork #%d\n", i);
 */
 int	thread_wait(t_symposium *s)
