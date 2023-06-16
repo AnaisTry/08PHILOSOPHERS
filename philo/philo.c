@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: angassin <angassin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: angassin <angassin@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 23:14:26 by angassin          #+#    #+#             */
-/*   Updated: 2023/06/15 14:30:36 by angassin         ###   ########.fr       */
+/*   Updated: 2023/06/16 16:48:39 by angassin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,14 +80,14 @@ static t_bool	eat(t_philo *p)
 		return (FALSE);
 	}
 	pthread_mutex_lock(p->right_fork);
-	pthread_mutex_lock(p->dinner->death);
+	//pthread_mutex_lock(p->dinner->death);
 	p->last_meal = get_time();
-	pthread_mutex_unlock(p->dinner->death);
+	//pthread_mutex_unlock(p->dinner->death);
 	print_state(p, "has taken a fork");
 	print_state(p, "is eating");
-	pthread_mutex_lock(p->dinner->death);
+	//pthread_mutex_lock(p->dinner->death);
 	p->nb_meals++;
-	pthread_mutex_unlock(p->dinner->death);
+	//pthread_mutex_unlock(p->dinner->death);
 	ft_usleep(p->dinner->time_to_eat);
 	pthread_mutex_unlock(p->left_fork);
 	pthread_mutex_unlock(p->right_fork);
